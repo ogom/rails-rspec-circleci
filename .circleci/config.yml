@@ -18,47 +18,37 @@ jobs:
           POSTGRES_PASSWORD: ""
     steps:
       - checkout
-
       - run:
           name: Which bundler?
           command: bundle -v
-
       - restore_cache:
           keys:
             - rails-myapp-bundle-v2-{{ checksum "Gemfile.lock" }}
             - rails-myapp-bundle-v2-
-
       - run:
           name: Bundle Install
           command: bundle check || bundle install --jobs=3 --retry=3 --path vendor/bundle
-
       - save_cache:
           key: rails-myapp-bundle-v2-{{ checksum "Gemfile.lock" }}
           paths:
             - vendor/bundle
-
       - restore_cache:
           keys:
             - rails-myapp-yarn-{{ checksum "yarn.lock" }}
             - rails-myapp-yarn-
-
       - run:
           name: Yarn Install
           command: yarn install --cache-folder ~/.cache/yarn
-
       - save_cache:
           key: rails-myapp-yarn-{{ checksum "yarn.lock" }}
           paths:
             - ~/.cache/yarn
-
       - run:
           name: Wait for DB
           command: dockerize -wait tcp://localhost:5432 -timeout 1m
-
       - run:
           name: Database setup
           command: bin/rails db:schema:load --trace
-
       - run:
           name: Run rspec in parallel
           command: |
@@ -67,21 +57,21 @@ jobs:
                               --out /tmp/test_results/rspec.xml \
                               --format progress \
                               $(circleci tests glob "spec/**/*_spec.rb" | circleci tests split --split-by=timings)
-
       - store_test_results:
           path: /tmp/test-results
-
       - store_artifacts:
           path: /tmp/test-results
           destination: test-results
 
   deploy:
+    docker:
+      - image: buildpack-deps:trusty
     steps:
       - checkout
       - run:
           name: Deploy Master to Heroku
           command: |
-            git push https://heroku:$HEROKU_API_KEY@git.heroku.com/$HEROKU_APP.git master
+            git push https://heroku:$HEROKU_API_KEY@git.heroku.com/$HEROKU_APP_NAME.git master
 
 workflows:
   version: 2
