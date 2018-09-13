@@ -1,7 +1,7 @@
 version: 2
 jobs:
   build:
-    working_directory: ~/myapp
+    working_directory: ~/repo
     parallelism: 3
     docker:
       - image: circleci/ruby:2.5.1-node-browsers
@@ -63,7 +63,7 @@ jobs:
           command: |
             bundle exec rspec --profile 10 \
                               --format RspecJunitFormatter \
-                              --out test_results/rspec.xml \
+                              --out tmp/test_results/rspec.xml \
                               --format progress \
                               $(circleci tests glob "spec/**/*_spec.rb" | circleci tests split --split-by=timings)
 
