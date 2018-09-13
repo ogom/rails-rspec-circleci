@@ -63,13 +63,13 @@ jobs:
           command: |
             bundle exec rspec --profile 10 \
                               --format RspecJunitFormatter \
-                              --out tmp/test_results/rspec.xml \
+                              --out /tmp/test_results/rspec.xml \
                               --format progress \
                               $(circleci tests glob "spec/**/*_spec.rb" | circleci tests split --split-by=timings)
 
       - store_test_results:
-          path: tmp/test-results
+          path: /tmp/test-results
 
       - store_artifacts:
-          path: tmp/test-results
+          path: /tmp/test-results
           destination: test-results
