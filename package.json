@@ -1,5 +1,9 @@
 {
   "name": "myapp",
   "private": true,
-  "dependencies": {}
+  "dependencies": {},
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "ogom <ogom@outlook.com>",
+  "license": "MIT"
 }

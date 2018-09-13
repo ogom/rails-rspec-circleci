@@ -46,4 +46,5 @@ end
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 gem 'factory_bot_rails', group: [:development, :test]
+gem 'rspec_junit_formatter', group: [:development, :test]
 gem 'rspec-rails', group: [:development, :test]
