@@ -3,7 +3,8 @@ default: &default
   template: template0
   encoding: unicode
   host: <%= ENV.fetch("MYAPP_DATABASE_HOST_PATH") { "db" } %>
-  username: postgres
+  username: <%= ENV.fetch("MYAPP_DATABASE_USERNAME") { "postgres" } %>
+  password: <%= ENV.fetch("MYAPP_DATABASE_PASSWORD") { "" } %>
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
 
 development:
@@ -17,4 +18,3 @@ test:
 production:
   <<: *default
   database: myapp_production
-  password: <%= ENV['MYAPP_DATABASE_PASSWORD'] %>

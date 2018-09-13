@@ -9,6 +9,7 @@ jobs:
           PGHOST: 127.0.0.1
           PGUSER: myapp-user
           MYAPP_DATABASE_HOST_PATH: localhost
+          MYAPP_DATABASE_USERNAME: myapp-user
           RAILS_ENV: test
       - image: circleci/postgres:9.6-alpine
         environment:
